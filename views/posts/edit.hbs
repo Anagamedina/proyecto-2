@@ -1,0 +1,10 @@
+<div>
+    <form action="/posts/update/{{post._id}}" method="post">
+        <input name="title" type="text" placeholder="title" value="{{post.id}}" > <br>
+        <textarea name="description" cols="30" rows="3" placeholder="description" > {{post.description}} </textarea> <br>
+        <input name="origin" type="text" placeholder="origin"  value="{{post.origin}}"> <br>
+        <input name="destination" type="text" placeholder="destination"  value="{{post.destination}}"> <br> 
+    <button>Submit</button>
+
+    </form>
+</div>

@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <a href="/posts/new" class="btn btn-primary">New post</a>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  {{#each posts}}
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">{{this.description}}</p>
+
+          <a href="/posts/edit/{{this._id}}" class="btn btn-primary">Editar</a>
+          <a href="/posts/delete/{{this._id}}" class="btn btn-danger">
+            Borrar
+          </a>
+          {{! <br /> }}
+          {{! <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1496.9828805013453!2d2.148868440143601!3d41.37482860330347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a279425a8f21%3A0x23e0874a0e6110c2!2sPla%C3%A7a%20d&#39;Espanya%2C%2008004%20Barcelona!5e0!3m2!1sen!2ses!4v1690125935744!5m2!1sen!2ses" width="300" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> }}
+        </div>
+        <hr />
+        <div class="container">
+          <h5>Comments</h5>
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Nombre test</div>
+                Content for list item
+              </div>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Nombre test</div>
+                Content for list item
+              </div>
+            </li>
+
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                <form action="/comments/create" method="post">
+                  <input class="form-control" type="text" name="content" />
+                  {{!-- <input class=" " type="text" name="userId" value="{{../userid}}"/> --}}
+                  <input class=" " type="text" name="postId" value="{{this._id}}" />
+                  <button class="btn btn-secondary btn-sm">add comment</button>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <br />
+        </div>
+      </div>
+    </div>
+
+  {{/each}}
+  <script>
+
+  </script>
+  {{! <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div> }}
+</div>
