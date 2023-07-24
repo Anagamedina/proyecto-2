@@ -51,7 +51,7 @@ const postSchema = new Schema({
 
 });
 
-const Post = mongoose.model('Post', postSchema);
+
 
 ```
 #### Comment.model.js
@@ -62,7 +62,7 @@ const commentSchema = new Schema({
 
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
+
 
 ```
 #### ruta.model.js
@@ -74,7 +74,7 @@ const routeSchema = new Schema({
  
 });
 
-const Route = mongoose.model('Route', routeSchema);
+
 
 
 ```

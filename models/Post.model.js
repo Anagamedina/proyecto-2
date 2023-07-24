@@ -19,3 +19,4 @@ const PostSchema = new Schema(
 const Post = model("Post", PostSchema);
 
 module.exports = Post;
+  
