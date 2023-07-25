@@ -1,5 +1,5 @@
 <div>
-    <form action="/posts/update/{{post._id}}" method="post">
+    <form action="/posts/update/{{post._id}}" method="POST">
         <input name="title" type="text" placeholder="title" value="{{post.id}}" > <br>
         <textarea name="description" cols="30" rows="3" placeholder="description" > {{post.description}} </textarea> <br>
         <input name="origin" type="text" placeholder="origin"  value="{{post.origin}}"> <br>
@@ -7,4 +7,4 @@
     <button>Submit</button>
 
     </form>
-</div>
+</div> 

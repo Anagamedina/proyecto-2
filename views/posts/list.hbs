@@ -16,9 +16,7 @@
           <p class="card-text">{{this.description}}</p>
 
           <a href="/posts/edit/{{this._id}}" class="btn btn-primary">Editar</a>
-          <a href="/posts/delete/{{this._id}}" class="btn btn-danger">
-            Borrar
-          </a>
+          <a href="/posts/delete/{{this._id}}" class="btn btn-danger">Borrar</a>
           {{! <br /> }}
           {{! <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1496.9828805013453!2d2.148868440143601!3d41.37482860330347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a279425a8f21%3A0x23e0874a0e6110c2!2sPla%C3%A7a%20d&#39;Espanya%2C%2008004%20Barcelona!5e0!3m2!1sen!2ses!4v1690125935744!5m2!1sen!2ses" width="300" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> }}
         </div>
@@ -47,9 +45,9 @@
               class="list-group-item d-flex justify-content-between align-items-start"
             >
               <div class="ms-2 me-auto">
-                <form action="/comments/create" method="post">
+                <form action="/comments/create" method="POST">
                   <input class="form-control" type="text" name="content" />
-                  {{!-- <input class=" " type="text" name="userId" value="{{../userid}}"/> --}}
+                
                   <input class=" " type="text" name="postId" value="{{this._id}}" />
                   <button class="btn btn-secondary btn-sm">add comment</button>
                 </form>
