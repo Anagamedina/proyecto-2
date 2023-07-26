@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 /* GET home page */
-router.get("/", (req, res, next) => {
-  res.send(req.session.currentUser)
-  // res.render("index");
+router.get("/", isLoggedIn, (req, res, next) => {
+  res.redirect("/posts")
+  // res.send(req.session.currentUser || "usuario no logeado")
+  //res.render("index");
 });
 
 module.exports = router;
