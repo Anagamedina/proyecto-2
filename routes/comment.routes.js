@@ -7,39 +7,22 @@ router.post("/create", async (req, res, next) => {
     ...req.body,
     userId: req.session.currentUser._id,
  };
-  res.send(toSave)
+ console.log(toSave);
  
-   await Post.create(toSave);
-   res.redirect("/posts");
+ await Comment.create(toSave);
+  // res.send(toSave)
+    res.redirect("/posts");
+});
+
+// http://localhost:3000/comments/todos
+router.get("/todos", async (req, res, next) => {
+  Comment.find({}).then((data) => { 
+    res.send(data)  
+  });
 });
 
 
-///////////////////////////////////////////////
-
-//router.post("/create", (req, res, next) => {
-//  const { content } = req.body;
-//  const userId = req.session.currentUser._id;
-
-
-//  Comment.create({ content, userId })
-//    .then((newComment) => {
-//      res.send(newComment); 
-//    })
-//    .catch((err) => {
-//      res.status(500).send("Error al crear el comentario.");
-//    });
-//});
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////7
+//no se que pasa que no sale nada en coments!!!!!
 
 
 
@@ -48,7 +31,7 @@ router.post("/create", async (req, res, next) => {
 
 // router.get("/", (req, res, next) => {
 //   Post.find({}).then((data) => {
-//     res.render("posts/list", { posts: data, userid: req.session.currentUser._id });
+//     res.render("commments/list", { commments: data, userid: req.session.currentUser._id });
 //   });
 // });
 
@@ -75,7 +58,3 @@ router.post("/create", async (req, res, next) => {
 
 
 module.exports = router;
-
-
-
-
