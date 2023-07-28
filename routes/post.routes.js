@@ -21,44 +21,63 @@ router.post("/new", async (req, res, next) => {
 
 
 router.get("/", isLoggedIn, (req, res, next) => { 
-  Post.find({}).then((data) => { //arraydata
+  Post.find({}).populate("comments").then((data) => { //arraydata
      
-   //res.send(data)
-   //return 
+  //  res.send(data)
+  //  return 
     data.map(post=>{   
       post.esMiPost = (post.user.toString()  == req.session.currentUser._id)
     })
 
-    res.render("posts/list", { posts: data, userid: req.session.currentUser._id });
+    res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
+    delete req.session.error  
+  });
+});
+
+router.get("/json", isLoggedIn, (req, res, next) => { 
+  Post.find({}).populate("comments").then((data) => { //arraydata 
+     res.send(data)  
   });
 });
 
 router.get("/my", isLoggedIn, (req, res, next) => { 
   Post.find({user: req.session.currentUser._id}).then((data) => { 
+    data.map(post=>{   
+      post.esMiPost = true;
+    })
     res.render("posts/list", { posts: data, userid: req.session.currentUser._id });
   });
 });
 
+// READ de un único post
+router.get("/:id", (req, res, next) => {
+  Post.findById(req.params.id).populate("comments").then((data) => {
+    res.render("posts/viewOne", { post: data });
+  });
+})
 
-router.get("/edit/:id", (req, res, next) => {
+router.get("/:id/edit", (req, res, next) => {
   Post.findById(req.params.id).then((data) => {
     res.render("posts/edit", { post: data });
   });
 });
 
 
-router.post("/update/:id", (req, res, next) => {
+router.post("/:id/edit", (req, res, next) => {
   Post.findByIdAndUpdate(req.params.id, req.body).then((data) => {
     res.redirect("/posts");
   });
 });
+ 
 
-
-router.get("/delete/:id", (req, res, next) => {
+router.get("/:id/delete", (req, res, next) => {
   Post.findByIdAndDelete(req.params.id).then((_) => {
     res.redirect("/posts");
   });
 });
 
+
+//crear populate en todas las rutas de get post con los comentarios
+//comentarios [y autor]
 
 module.exports = router;
