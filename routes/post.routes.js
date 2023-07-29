@@ -33,7 +33,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
     delete req.session.error  
   });
 });
-
+//devolvemos las publis con sus comentarios asociados en formato Json para verlo!!!!algo mio
 router.get("/json", isLoggedIn, (req, res, next) => { 
   Post.find({}).populate("comments").then((data) => { //arraydata 
      res.send(data)  
@@ -76,8 +76,5 @@ router.get("/:id/delete", (req, res, next) => {
   });
 });
 
-
-//crear populate en todas las rutas de get post con los comentarios
-//comentarios [y autor]
 
 module.exports = router;
