@@ -3,6 +3,7 @@ const router = express.Router();
 const Comment = require("../models/Comment.model");
 const Post = require("../models/Post.model");
 
+//creacion comentario post especifico 
 router.post("/create", async (req, res, next) => {
   let toSave = {
     // ...req.body, remmember
@@ -16,7 +17,6 @@ router.post("/create", async (req, res, next) => {
     res.redirect("/posts" );
     return 
   } 
-
 
   Comment.create(toSave).then((commnetRes) => {
     // Post.commments.push(commnetRes._id)
@@ -35,8 +35,6 @@ router.get("/todos", async (req, res, next) => {
     res.send(data);
   });
 });
-
-//no se que pasa que no sale nada en coments!!!!!
 
 
 module.exports = router;

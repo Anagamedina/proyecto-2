@@ -9,6 +9,7 @@ const PostSchema = new Schema(
     destination: String,
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, 
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],  //uno o muchos
+    likes:[{type:Schema.Types.ObjectId, ref: "User" }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

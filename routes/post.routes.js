@@ -21,7 +21,7 @@ router.post("/new", async (req, res, next) => {
 
 
 router.get("/", isLoggedIn, (req, res, next) => { 
-  Post.find({}).populate("comments").then((data) => { //arraydata
+  Post.find({}).populate("comments").then((data) => { //arraydata //devuelve las instancias de Post 
      
   //  res.send(data)
   //  return 
@@ -33,7 +33,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
     delete req.session.error  
   });
 });
-//devolvemos las publis con sus comentarios asociados en formato Json para verlo!!!!algo mio
+//ENDPOINT 
 router.get("/json", isLoggedIn, (req, res, next) => { 
   Post.find({}).populate("comments").then((data) => { //arraydata 
      res.send(data)  
@@ -55,25 +55,50 @@ router.get("/:id", (req, res, next) => {
     res.render("posts/viewOne", { post: data });
   });
 })
-
+//EDITAR una ruta especifica 
 router.get("/:id/edit", (req, res, next) => {
   Post.findById(req.params.id).then((data) => {
     res.render("posts/edit", { post: data });
   });
 });
 
-
+//Actualizacion publicacion especifica 
 router.post("/:id/edit", (req, res, next) => {
   Post.findByIdAndUpdate(req.params.id, req.body).then((data) => {
     res.redirect("/posts");
   });
 });
  
-
+//DELETE
 router.get("/:id/delete", (req, res, next) => {
-  Post.findByIdAndDelete(req.params.id).then((_) => {
+  Post.findByIdAndDelete(req.params.id).then(() => {
     res.redirect("/posts");
   });
+});
+
+
+//LIKES
+
+router.post("/:id/like", isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).send("Publicación no encontrada");
+    }
+
+    // Verifica si el usuario ya le dio "Me gusta" y agrega o quita según corresponda
+    if (post.likes.includes(req.session.currentUser._id)) {
+      post.likes.pull(req.session.currentUser._id);
+    } else {
+      post.likes.push(req.session.currentUser._id);
+    }
+
+    await post.save();
+    res.redirect("/posts");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al procesar la solicitud");
+  }
 });
 
 

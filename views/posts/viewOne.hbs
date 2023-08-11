@@ -15,6 +15,11 @@
           src="https://www.google.com/maps/embed/v1/directions?mode=walking&origin={{post.origin}}&destination={{post.destination}}&key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk">
         </iframe>
 
+        <form action="/posts/{{post._id}}/like" method="POST">
+          <button type="submit" class="btn btn-primary">Me Gusta</button>
+        </form>
+
+
         </div>
         <hr />
         <div class="container">
