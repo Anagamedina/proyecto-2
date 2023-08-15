@@ -5,6 +5,9 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/", isLoggedIn, (req, res, next) => {
   Event.find({}).populate("invited").then((data) => {
+    data.map(event=>{
+      event.editable = (event.creator._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
+    })
 
     res.render("events/list", { events: data });
   });
@@ -35,6 +38,12 @@ router.post("/addMe", isLoggedIn, (req, res, next) => {
     res.redirect("/events");
   });
   // res.render("events/create");
+});
+
+router.get("/:id/delete", (req, res, next) => {
+  Event.findByIdAndDelete(req.params.id).then(() => {
+    res.redirect("/events");
+  });
 });
 
 module.exports = router;
