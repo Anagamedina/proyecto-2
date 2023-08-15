@@ -34,8 +34,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
 
     return;
   }
-   // Verificar si el email es el email del administrador
-  // const isAdminEmail = (email === "anaga.medina@gmial.com"); 
+  
 
   
   if (password.length < 6) {
@@ -160,57 +159,6 @@ router.get("/logout", isLoggedIn, (req, res) => {
 });
 
 
-// GET /auth/admin-login
-router.get("/admin-login", isLoggedOut, (req, res) => {
-  res.render("auth/admin-login");
-});
-
-// POST /auth/admin-login
-router.post("/admin-login", isLoggedOut, (req, res, next) => {
-  const { email, password, role } = req.body;
-
-  // Verificar que el rol sea "admin"
-  if (role !== 'admin') {
-    res.status(403).render("auth/admin-login", {
-      errorMessage: "Only administrators can log in.",
-    });
-    return;
-  }
-  User.findOne({ email })
-    .then((user) => {
-      if (!user) {
-        res.status(400).render("auth/admin-login", {
-          errorMessage: "Wrong credentials.",
-        });
-        return;
-      }
-
-      bcrypt.compare(password, user.password)
-        .then((isSamePassword) => {
-          if (!isSamePassword) {
-            res.status(400).render("auth/admin-login", {
-              errorMessage: "Wrong credentials.",
-            });
-            return;
-          }
-
-          // Verificar si el usuario tiene el rol de administrador
-          if (user.rol !== 'admin') {
-            res.status(403).render("auth/admin-login", {
-              errorMessage: "Only administrators can log in.",
-            });
-            return;
-          }
-
-          // Autenticación exitosa
-          req.session.currentUser = user.toObject();
-          delete req.session.currentUser.password;
-          res.redirect("/");
-        })
-        .catch((err) => next(err));
-    })
-    .catch((err) => next(err));
-});
 
 
 
