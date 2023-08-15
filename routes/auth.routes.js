@@ -152,4 +152,27 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
+
+// GET /auth/admin-login
+router.get("/admin-login", isLoggedOut, (req, res) => {
+  res.render("auth/admin-login");
+});
+
+// POST /auth/admin-login
+router.post("/admin-login", isLoggedOut, (req, res, next) => {
+  const { email, password, role } = req.body;
+
+  // Verificar que el rol sea "admin"
+  if (role !== 'admin') {
+    res.status(403).render("auth/admin-login", {
+      errorMessage: "Only administrators can log in.",
+    });
+    return;
+  }
+
+  // Resto de la lógica de autenticación similar a la ruta de inicio de sesión regular
+  // ...
+});
+
+
 module.exports = router;

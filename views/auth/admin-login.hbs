@@ -1,0 +1,14 @@
+<form action="/auth/admin-login" method="POST">
+  <!-- Otros campos de inicio de sesión (correo electrónico y contraseña) -->
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+
+  <!-- Campo para seleccionar el rol -->
+  <label for="role">Role:</label>
+  <select name="role" id="role" required>
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <button type="submit">Log In</button>
+</form>

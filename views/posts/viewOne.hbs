@@ -18,7 +18,7 @@
         <form action="/posts/{{post._id}}/like" method="POST">
           <button type="submit" class="btn btn-primary">Me Gusta</button>
         </form>
-
+        <span>{{post.likes.length }} likes</span>
 
         </div>
         <hr />
@@ -28,6 +28,7 @@
               {{#each post.comments}}
                 <li  class="list-group-item d-flex justify-content-between align-items-start" >
                   <div class="ms-2 me-auto">
+                     <strong> {{this.userId.username}}</strong>:
                     {{this.content}}
                   </div>
                 </li>

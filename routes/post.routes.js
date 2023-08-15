@@ -21,21 +21,27 @@ router.post("/new", async (req, res, next) => {
 
 
 router.get("/", isLoggedIn, (req, res, next) => { 
-  Post.find({}).populate("comments").then((data) => { //arraydata //devuelve las instancias de Post 
-     
-  //  res.send(data)
-  //  return 
-    data.map(post=>{   
-      post.esMiPost = (post.user.toString()  == req.session.currentUser._id)
-    })
+  
+  Post.find({}).populate({ 
+    path: 'comments',
+    populate:{
+     path: 'userId' 
+    }})
+    .then((data) => {  
+      data.map(post=>{   
+        post.esMiPost = (post.user.toString()  == req.session.currentUser._id) 
+        post.comments.map(comment=>{ 
+          comment.esMio = (comment.userId._id.toString()  == req.session.currentUser._id) 
+        })
+      })
 
-    res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
-    delete req.session.error  
+      res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
+      delete req.session.error  
   });
 });
-//ENDPOINT 
+//JSON 
 router.get("/json", isLoggedIn, (req, res, next) => { 
-  Post.find({}).populate("comments").then((data) => { //arraydata 
+  Post.find({}).populate("comments").then((data) => { 
      res.send(data)  
   });
 });
@@ -51,7 +57,12 @@ router.get("/my", isLoggedIn, (req, res, next) => {
 
 // READ de un único post
 router.get("/:id", (req, res, next) => {
-  Post.findById(req.params.id).populate("comments").then((data) => {
+  Post.findById(req.params.id).populate({ 
+    path: 'comments',
+    populate:{
+     path: 'userId' 
+    }}).then((data) => {
+    console.log(data);
     res.render("posts/viewOne", { post: data });
   });
 })
@@ -77,7 +88,7 @@ router.get("/:id/delete", (req, res, next) => {
 });
 
 
-//LIKES
+//LIKES 
 
 router.post("/:id/like", isLoggedIn, async (req, res, next) => {
   try {
@@ -94,7 +105,7 @@ router.post("/:id/like", isLoggedIn, async (req, res, next) => {
     }
 
     await post.save();
-    res.redirect("/posts");
+    res.redirect("/posts/"+req.params.id); //+?
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al procesar la solicitud");

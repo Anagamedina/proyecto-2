@@ -9,7 +9,7 @@
    {{/if}}
 
 
-  <div class="col-sm-6">
+  <div class="col-sm-6 mx-auto">
     <div class="card">
       <div class="card-body">
         <a href="/posts/new" class="btn btn-primary">New post</a>
@@ -19,22 +19,25 @@
   <hr />
 
   {{#each posts}}
-    <div class="col-sm-6 mb-3 mb-sm-0">
-      <div class="card">
+    <div class="col-12">
+      <div class="card mx-auto" style="width: 42rem;">
         <div class="card-body">
        <a href="/posts/{{this._id}}">
           <h5 class="card-title">{{this.title}}</h5>
        </a>
           <p class="card-text">{{this.description}}</p>
  
- 
- 
-
-          <iframe
+  
+        <iframe
           width="600" height="450"    style="border:0"  loading="lazy"    referrerpolicy="no-referrer-when-downgrade"
           src="https://www.google.com/maps/embed/v1/directions?mode=walking&origin={{this.origin}}&destination={{this.destination}}&key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk">
         </iframe>
           
+          <form action="/posts/{{this._id}}/like" method="POST">
+        <button type="submit" class="btn btn-primary">Me Gusta</button>
+        </form>
+        <span>{{this.likes.length }} likes</span>
+ <br>
           {{#if this.esMiPost}}
               <a href="/posts/{{this._id}}/edit" class="btn btn-primary">Editar</a>
               <a href="/posts/{{this._id}}/delete" class="btn btn-danger">Borrar</a>
@@ -49,9 +52,15 @@
              {{#each this.comments}}
                 <li  class="list-group-item d-flex justify-content-between align-items-start" >
                   <div class="ms-2 me-auto">
+                    <strong> {{this.userId.username}}</strong>:
                     {{this.content}}
-                    {{! <strong>{{this.userId.username}}
+                    {{this.esMio}}
+                    
                   </div>
+                    {{#if this.esMio}} 
+                      <a href="/comments/delete/{{this.id}}" class="btn btn-danger">Delete</a>
+                   {{/if}}
+
                 </li>
              {{/each}}
 
@@ -70,6 +79,7 @@
         </div>
       </div>
     </div>
+    
 
   {{/each}}
   <script>

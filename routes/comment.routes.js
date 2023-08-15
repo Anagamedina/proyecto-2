@@ -30,6 +30,24 @@ router.post("/create", async (req, res, next) => {
 });
 
 // http://localhost:3000/comments/todos
+router.get("/delete/:id", async (req, res, next) => {
+  
+  Comment.findById(req.params.id).then((comment) => { 
+    if (comment.userId == req.session.currentUser._id){
+      Comment.findByIdAndDelete(req.params.id).then((data) => { 
+        res.redirect("/posts"); 
+      }); 
+    }else{
+      req.session.error = "no es tu comentario"
+      res.redirect("/posts");
+      delete req.session.error
+
+    }
+  }); 
+
+
+
+});
 router.get("/todos", async (req, res, next) => {
   Comment.find({}).then((data) => {
     res.send(data);

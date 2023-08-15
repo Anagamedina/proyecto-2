@@ -1,0 +1,59 @@
+ <a href="/events/new" class="btn btn-green">New Event</a>  
+
+<h1>
+
+events:
+</h1>
+
+{{#each events}}
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-body">
+       
+          <h5 class="card-title">{{this.title}}</h5>
+        
+        <p class="card-text">{{this.description}}</p>
+        <p class="card-text">Time: {{this.date}}</p>
+
+<iframe
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk
+    &q={{this.location}}">
+</iframe>
+
+      </div>
+      <hr />
+      <div class="container">
+        <h5>Invited people:</h5>
+        <ul class="list-group">
+          {{#each this.invited}}
+            <li
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div class="ms-2 me-auto">
+                {{this.username}}
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+        <br />
+        <form action="/events/addMe" method="POST">
+          <input
+            class="d-none"
+            type="text"
+            name="eventId"
+            value="{{this._id}}"
+          />
+          <button class="btn btn-primary btn-sm">Add myself</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+
+{{/each}}
