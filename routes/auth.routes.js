@@ -22,9 +22,11 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, email, password } = req.body; 
+
+  const { username, email, password, role } = req.body; 
+  
   // Check that username, email, and password are provided
-  if (username === "" || email === "" || password === "") {
+  if (username === "" || email === "" || password === ""  || role === "") {
     res.status(400).render("auth/signup", {
       errorMessage:
         "All fields are mandatory. Please provide your username, email and password.",
@@ -32,7 +34,10 @@ router.post("/signup", isLoggedOut, (req, res) => {
 
     return;
   }
+   // Verificar si el email es el email del administrador
+  // const isAdminEmail = (email === "anaga.medina@gmial.com"); 
 
+  
   if (password.length < 6) {
     res.status(400).render("auth/signup", {
       errorMessage: "Your password needs to be at least 6 characters long.",
@@ -40,7 +45,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
 
     return;
   }
-
+  
   //   ! This regular expression checks password for special characters and minimum length
   /*
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -60,7 +65,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      return User.create({ username, email, password: hashedPassword });
+      return User.create({ username, email, password: hashedPassword, role });
     })
     .then((user) => {
       res.redirect("/auth/login");
@@ -79,6 +84,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
 });
 
+
+
 // GET /auth/login
 router.get("/login", isLoggedOut, (req, res) => {
   res.render("auth/login");
@@ -86,10 +93,10 @@ router.get("/login", isLoggedOut, (req, res) => {
 
 // POST /auth/login
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
   // Check that username, email, and password are provided
-  if (username === "" || email === "" || password === "") {
+  if (username === "" ||  password === "") {
     res.status(400).render("auth/login", {
       errorMessage:
         "All fields are mandatory. Please provide username, email and password.",
@@ -107,7 +114,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   }
 
   // Search the database for a user with the email submitted in the form
-  User.findOne({ email })
+  User.findOne({ username })
     .then((user) => {
       // If the user isn't found, send an error message that user provided wrong credentials
       if (!user) {
@@ -132,7 +139,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           req.session.currentUser = user.toObject(); //El método toObject() se utiliza para obtener una copia del objeto Mongoose user como un objeto JavaScript plano. 
           // Remove the password field
           delete req.session.currentUser.password;
-
+          console.log(req.session.currentUser);
           res.redirect("/");
         })
         .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
@@ -145,7 +152,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).render("auth/logout", { errorMessage: err.message });
-      return;
+      return; 
     } 
  
     res.redirect("/");
@@ -169,10 +176,44 @@ router.post("/admin-login", isLoggedOut, (req, res, next) => {
     });
     return;
   }
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        res.status(400).render("auth/admin-login", {
+          errorMessage: "Wrong credentials.",
+        });
+        return;
+      }
 
-  // Resto de la lógica de autenticación similar a la ruta de inicio de sesión regular
-  // ...
+      bcrypt.compare(password, user.password)
+        .then((isSamePassword) => {
+          if (!isSamePassword) {
+            res.status(400).render("auth/admin-login", {
+              errorMessage: "Wrong credentials.",
+            });
+            return;
+          }
+
+          // Verificar si el usuario tiene el rol de administrador
+          if (user.rol !== 'admin') {
+            res.status(403).render("auth/admin-login", {
+              errorMessage: "Only administrators can log in.",
+            });
+            return;
+          }
+
+          // Autenticación exitosa
+          req.session.currentUser = user.toObject();
+          delete req.session.currentUser.password;
+          res.redirect("/");
+        })
+        .catch((err) => next(err));
+    })
+    .catch((err) => next(err));
 });
+
+
+
 
 
 module.exports = router;

@@ -33,7 +33,7 @@ router.post("/create", async (req, res, next) => {
 router.get("/delete/:id", async (req, res, next) => {
   
   Comment.findById(req.params.id).then((comment) => { 
-    if (comment.userId == req.session.currentUser._id){
+    if (comment.userId == req.session.currentUser._id  || req.session.currentUser.role == 'admin'){
       Comment.findByIdAndDelete(req.params.id).then((data) => { 
         res.redirect("/posts"); 
       }); 

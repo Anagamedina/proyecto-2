@@ -15,16 +15,20 @@ events:
         <p class="card-text">{{this.description}}</p>
         <p class="card-text">Time: {{this.date}}</p>
 
-<iframe
-  width="600"
-  height="450"
-  style="border:0"
-  loading="lazy"
-  allowfullscreen
-  referrerpolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk
-    &q={{this.location}}">
-</iframe>
+        <iframe
+          width="600"
+          height="450"
+          style="border:0"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk
+            &q={{this.location}}">
+        </iframe>
+          {{#if this.editable}}
+            <a href="/events/{{this._id}}/edit" class="btn btn-primary">Editar</a> 
+            <a href="/events/{{this._id}}/delete" class="btn btn-danger">Borrar</a>
+          {{/if}}   
 
       </div>
       <hr />

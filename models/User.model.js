@@ -20,7 +20,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     }, 
-    rol: {
+    role: {
       type: String,
       enum: ['user', 'admin'], // Definir los roles permitidos: usuario y administrador
       default: 'user', // Rol predeterminado

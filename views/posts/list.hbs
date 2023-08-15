@@ -13,6 +13,7 @@
     <div class="card">
       <div class="card-body">
         <a href="/posts/new" class="btn btn-primary">New post</a>
+        <a href="/auth/logout" class="btn btn-danger">logout</a>
       </div>
     </div>
   </div>
@@ -20,24 +21,22 @@
 
   {{#each posts}}
     <div class="col-12">
-      <div class="card mx-auto" style="width: 42rem;">
+      <div class="card mx-auto" style="max-width: 42rem;">
         <div class="card-body">
-       <a href="/posts/{{this._id}}">
-          <h5 class="card-title">{{this.title}}</h5>
-       </a>
+       <a href="/posts/{{this._id}}">   <h5 class="card-title">{{this.title}}</h5>   </a>
           <p class="card-text">{{this.description}}</p>
  
   
         <iframe
-          width="600" height="450"    style="border:0"  loading="lazy"    referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/directions?mode=walking&origin={{this.origin}}&destination={{this.destination}}&key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk">
+           width="100%" height="400px" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+           src="https://www.google.com/maps/embed/v1/directions?mode=walking&origin={{this.origin}}&destination={{this.destination}}&key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk">
         </iframe>
           
           <form action="/posts/{{this._id}}/like" method="POST">
         <button type="submit" class="btn btn-primary">Me Gusta</button>
         </form>
         <span>{{this.likes.length }} likes</span>
- <br>
+        <br>
           {{#if this.esMiPost}}
               <a href="/posts/{{this._id}}/edit" class="btn btn-primary">Editar</a>
               <a href="/posts/{{this._id}}/delete" class="btn btn-danger">Borrar</a>

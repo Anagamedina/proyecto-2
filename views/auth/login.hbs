@@ -1,4 +1,36 @@
-<div id="login-form">
+
+<div class="container">
+<br>
+<br>
+<br>
+<main class="form-signin w-50 m-auto">
+  <form action="/auth/login" method="POST"> 
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="form-floating m-2">
+      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Your username">
+      <label for="floatingInput">Your username</label>
+    </div>
+    
+    <div class="form-floating m-2">
+      <input type="password" class="form-control" id="floatingPassword"  name="password" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+ 
+    <button class="btn btn-primary w-100 py-2 m-2" type="submit">Sign in</button> 
+
+    <a href="/auth/signup" class="btn btn-primary w-100 py-2 m-2">signup</a>
+
+  </form>
+
+   {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
+</main> 
+</div>
+ 
+
+ {{!-- <div id="login-form">
   <h2>Log In</h2>
   <form action="/auth/login" method="POST">
 
@@ -16,9 +48,15 @@
 
     <button type="submit">Log In</button>
 
-
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
+ 
   </form>
 </div>
+
+  <div class="col-sm-6 mx-auto">
+    <div class="card">
+      <div class="card-body"> 
+        <a href="/auth/signup" class="btn btn-primary">signup</a>
+      </div>
+    </div>
+  </div>
+  <hr /> --}}

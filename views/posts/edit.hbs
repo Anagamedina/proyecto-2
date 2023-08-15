@@ -1,6 +1,6 @@
 <div>
-    <form action="/posts/edit/{{post._id}}" method="POST">
-        <input name="title" type="text" placeholder="title" value="{{post.id}}" > <br>
+    <form action="/posts/{{post._id}}/edit" method="POST">
+        <input name="title" type="text" placeholder="title" value="{{post.title}}" > <br>
         <textarea name="description" cols="30" rows="3" placeholder="description" > {{post.description}} </textarea> <br>
         <input name="origin" type="text" placeholder="origin"  value="{{post.origin}}"> <br>
         <input name="destination" type="text" placeholder="destination"  value="{{post.destination}}"> <br> 

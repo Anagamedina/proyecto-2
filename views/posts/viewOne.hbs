@@ -6,9 +6,10 @@
           <h5 class="card-title">{{post.title}}</h5>
           <p class="card-text">{{post.description}}</p>
 
-          <a href="/posts/edit/{{post._id}}" class="btn btn-primary">Editar</a>
-          <a href="/posts/delete/{{post._id}}" class="btn btn-danger">Borrar</a>
-        
+      {{#if editable}}
+          <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Editar</a>
+          <a href="/posts/{{post._id}}/delete" class="btn btn-danger">Borrar</a>
+      {{/if}}   
       
         <iframe
           width="600" height="450"    style="border:0"  loading="lazy"    referrerpolicy="no-referrer-when-downgrade"
@@ -34,6 +35,16 @@
                 </li>
              {{/each}}
           </ul>
+          
+            <li class="list-group-item d-flex justify-content-between align-items-start" >
+              <div class="ms-2 me-auto">
+                <form action="/comments/create" method="POST">
+                  <input class="form-control" type="text" name="content" /> 
+                  <input class="d-none" type="text" name="postId" value="{{post._id}}" />
+                  <button class="btn btn-secondary btn-sm">add comment</button>
+                </form>
+              </div>
+            </li>
           <br />
         </div>
       </div>

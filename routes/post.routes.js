@@ -20,8 +20,7 @@ router.post("/new", async (req, res, next) => {
 });
 
 
-router.get("/", isLoggedIn, (req, res, next) => { 
-  
+router.get("/", isLoggedIn, (req, res, next) => {  
   Post.find({}).populate({ 
     path: 'comments',
     populate:{
@@ -31,10 +30,9 @@ router.get("/", isLoggedIn, (req, res, next) => {
       data.map(post=>{   
         post.esMiPost = (post.user.toString()  == req.session.currentUser._id) 
         post.comments.map(comment=>{ 
-          comment.esMio = (comment.userId._id.toString()  == req.session.currentUser._id) 
+          comment.esMio = (comment.userId?._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
         })
-      })
-
+      }) 
       res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
       delete req.session.error  
   });
@@ -51,21 +49,27 @@ router.get("/my", isLoggedIn, (req, res, next) => {
     data.map(post=>{   
       post.esMiPost = true;
     })
-    res.render("posts/list", { posts: data, userid: req.session.currentUser._id });
+    res.render("posts/list", { posts:  data, userid: req.session.currentUser._id });
   });
 });
 
 // READ de un único post
-router.get("/:id", (req, res, next) => {
-  Post.findById(req.params.id).populate({ 
-    path: 'comments',
-    populate:{
-     path: 'userId' 
-    }}).then((data) => {
-    console.log(data);
-    res.render("posts/viewOne", { post: data });
-  });
-})
+router.get("/:id", (req, res, next) => { 
+  Post.findById(req.params.id) 
+    .populate({
+      path: "comments", 
+      populate: {
+        path: "userId",
+      },
+    })
+    .then((data) => {
+      console.log(data);
+      let editable = (data?.user?.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
+
+
+      res.render("posts/viewOne", { post: data, editable: editable });
+    });
+});
 //EDITAR una ruta especifica 
 router.get("/:id/edit", (req, res, next) => {
   Post.findById(req.params.id).then((data) => {
