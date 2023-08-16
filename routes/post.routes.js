@@ -20,23 +20,40 @@ router.post("/new", async (req, res, next) => {
 });
 
 
-router.get("/", isLoggedIn, (req, res, next) => {  
-  Post.find({}).populate({ 
-    path: 'comments',
-    populate:{
-     path: 'userId' 
-    }})
-    .then((data) => {  
-      data.map(post=>{   
-        post.esMiPost = (post.user.toString()  == req.session.currentUser._id) 
-        post.comments.map(comment=>{ 
-          comment.esMio = (comment.userId._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
-        })
-      }) 
-      res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
-      delete req.session.error  
-  });
+router.get("/", isLoggedIn, (req, res, next) => {
+  Post.find({})
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'userId'
+      }
+    })
+    .then((data) => {
+      try {
+        data.map(post => {
+          post.esMiPost = (post.user.toString() == req.session.currentUser._id);
+          post.comments.map(comment => {
+            try {
+              comment.esMio = (comment.userId && comment.userId._id.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin';
+            } catch (error) {
+              
+            }
+          });
+        });
+        //post.comments.map(comment=>{ 
+        //  comment.esMio = (comment.userId?._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
+        //})
+        
+        res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
+        delete req.session.error;
+      } catch (error) {
+        
+        next(error); 
+      }
+    })
+    .catch(next); 
 });
+
 //JSON 
 router.get("/json", isLoggedIn, (req, res, next) => { 
   Post.find({}).populate("comments").then((data) => { 
@@ -64,11 +81,20 @@ router.get("/:id", (req, res, next) => {
     })
     .then((data) => {
       console.log(data);
-      let editable = (data.user.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
-
-
+      let editable = false;
+      try {
+        if (data && data.user) {
+          const userIdString = data.user.toString();
+          if (userIdString === req.session.currentUser._id || req.session.currentUser.role === 'admin') {
+            editable = true;
+          }
+        }
+      } catch (error) {
+        
+      }
       res.render("posts/viewOne", { post: data, editable: editable });
     });
+    //let editable = (data?.user?.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
 });
 //EDITAR una ruta especifica 
 router.get("/:id/edit", (req, res, next) => {
