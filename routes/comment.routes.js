@@ -6,7 +6,7 @@ const Post = require("../models/Post.model");
 //creacion comentario post especifico 
 router.post("/create", async (req, res, next) => {
   let toSave = {
-    // ...req.body, remmember
+    // ...req.body
     content: req.body.content,
     postId: req.body.postId,
     userId: req.session.currentUser._id,

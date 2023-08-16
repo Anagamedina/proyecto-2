@@ -28,9 +28,11 @@ router.post("/new", isLoggedIn, async (req, res, next) => {
   res.redirect("/events");
 });
 
+
+
 //Usuario actual se agruegue como invitado a un evento 
 router.post("/addMe", isLoggedIn, (req, res, next) => {
-  const { eventId } = req.body; //const eventId= req.body.eventId; ?
+  const { eventId } = req.body; //const eventId= req.body.eventId;
 
   Event.findByIdAndUpdate(eventId, {
     $addToSet : { invited: req.session.currentUser._id }, //push no funciona duplica 

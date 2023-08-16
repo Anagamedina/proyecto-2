@@ -30,7 +30,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
       data.map(post=>{   
         post.esMiPost = (post.user.toString()  == req.session.currentUser._id) 
         post.comments.map(comment=>{ 
-          comment.esMio = (comment.userId?._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
+          comment.esMio = (comment.userId._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
         })
       }) 
       res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
@@ -64,7 +64,7 @@ router.get("/:id", (req, res, next) => {
     })
     .then((data) => {
       console.log(data);
-      let editable = (data?.user?.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
+      let editable = (data.user.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
 
 
       res.render("posts/viewOne", { post: data, editable: editable });
