@@ -79,6 +79,7 @@ router.get("/my", isLoggedIn, (req, res, next) => {
 });
 
 // READ de un único post
+// READ de un único post
 router.get("/:id", (req, res, next) => {  
   try {
     Post.findById(req.params.id) 
@@ -90,18 +91,16 @@ router.get("/:id", (req, res, next) => {
       })
       .then((data) => {
         console.log(data); 
-        if (data && data.user) { 
-          let editable = (data.user.toString() === req.session.currentUser._id || req.session.currentUser.role === 'admin')  
-        } 
+        let editable = (data.user.toString() === req.session.currentUser._id || req.session.currentUser.role === 'admin');
         res.render("posts/viewOne", { post: data, editable: editable });
       });
 
   } catch (error) {
     console.log(error);
-    res.send("Error ")
+    res.send("Error ");
   }
-    //let editable = (data?.user?.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
 });
+
 //EDITAR una ruta especifica 
 router.get("/:id/edit", (req, res, next) => {
 
@@ -147,8 +146,8 @@ router.post("/:id/like", isLoggedIn, async (req, res, next) => {
       post.likes.push(req.session.currentUser._id);
     }
 
-    await post.save();
-    res.redirect("/posts/"+req.params.id); //+?
+    await post.save(); 
+    res.redirect("/posts/"+req.params.id); 
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al procesar la solicitud");
