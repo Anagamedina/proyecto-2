@@ -1,7 +1,6 @@
 
 ## About
-Este proyecto es una red social enfocada en el running, que permite a los usuarios compartir rutas que han realizado anteriormente y permite interactuar con dichas publicaciones a través de comentarios. Además, se implementará un modelo de rutas para lo cual se enlazará con la API de Strava.
-
+Este proyecto es una red social enfocada en el running, que permite a los usuarios compartir rutas que han realizado anteriormente y permite interactuar con dichas publicaciones a través de comentarios. Además, se implementará un modelo de eventos para que los usuarios puedan realizar salidas para salir a correr con varias personas a una hora y dia en concreto. 
   
 
 ![Project Image](.... "Project Image")
@@ -15,8 +14,8 @@ Características Principales
 Registro de usuarios con roles diferenciados.
 Inicio de sesión y cierre de sesión con contraseñas encriptadas.
 Publicación, edición y eliminación de rutas realizadas por los usuarios.
-Interacción mediante comentarios en las publicaciones de rutas.
-Integración opcional con la API de Strava para crear un modelo de rutas personalizado.
+Interacción mediante comentarios en las publicaciones de Posts y Eventos.
+Integración opcional con la API de Google para crear el recorrido de la carrera a realizar.
 
 ## Installation guide
 - Fork this repo
@@ -29,6 +28,12 @@ $ npm start
 ```
 
 ## Models
+
+#### .model.js
+```js
+});
+
+```
 #### User.model.js
 ```js
 const userSchema = new Schema({
@@ -43,11 +48,23 @@ const User = mongoose.model('User', userSchema);
 ``` 
 #### post.model.js
 ```js
-const postSchema = new Schema({
-  title: { type: String, required: true },
-  content: String,
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+const PostSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    description: String,
+    origin: String,
+    destination: String,
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, 
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],  //uno o muchos
+    likes:[{type:Schema.Types.ObjectId, ref: "User" }],
+  },
+  {
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
+  }
+);
+
+const Post = model("Post", PostSchema);
 
 });
 
@@ -56,24 +73,40 @@ const postSchema = new Schema({
 ```
 #### Comment.model.js
 ```js
-const commentSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  content: { type: String, required: true },
+const CommentSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    postId: { type: Schema.Types.ObjectId, ref: "Post", required: true },
+    content: { type: String, required: true },
+  },
+  {
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
+  }
+);
+
+const Comment = model("Comment", CommentSchema);
+
 
 });
 
 
 
 ```
-#### ruta.model.js
+#### event.model.js
 ```js
-const routeSchema = new Schema({
-  title: { type: String, required: true },
+const eventSchema = new mongoose.Schema({
+  title: String,
   description: String,
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
- 
-});
+  location: String,
+  date: Date,
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  invited: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
 
+});
 
 
 
