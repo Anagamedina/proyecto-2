@@ -1,5 +1,7 @@
 
 
+
+
 <div class="row">
 
    {{#if error}}
@@ -9,24 +11,26 @@
    {{/if}}
 
 
-  <div class="col-sm-6 mx-auto">
-    <div class="card">
-      <div class="card-body">
-        <a href="/posts/new" class="btn btn-primary">New post</a>
-        <a href="/auth/logout" class="btn btn-danger">logout</a>
+   <div class="col-sm-6 mx-auto my-2">
+    <div class="card mx-auto">
+      <div class="card-body mx-auto">
+        <a href="/posts/new" class="btn btn-primary">New post</a> 
       </div>
     </div>
-  </div>
-  <hr />
+  </div>  
 
   {{#each posts}}
     <div class="col-12">
       <div class="card mx-auto" style="max-width: 42rem;">
+         <h5 class="card-header">{{this.title}}</h5>
+
         <div class="card-body">
-       <a href="/posts/{{this._id}}">   <h5 class="card-title">{{this.title}}</h5>   </a>
+       <a href="/posts/{{this._id}}">  
+
+        <h5 class="card-title"></h5>   </a>
           <p class="card-text">{{this.description}}</p>
  
-  
+          <b>Post by: {{this.user.username}}</b>
         <iframe
            width="100%" height="400px" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
            src="https://www.google.com/maps/embed/v1/directions?mode=walking&origin={{this.origin}}&destination={{this.destination}}&key=AIzaSyArcPIIQNiga2-bKb1BUSeNJFM1LqJBLZk">
@@ -44,8 +48,9 @@
 
           
         </div>
-        <hr />
-        <div class="container">
+
+          
+        <div class=" card-footer text-body-secondary container">
           <h5>Comments</h5>
           <ul class="list-group">
              {{#each this.comments}}

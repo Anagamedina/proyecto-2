@@ -1,0 +1,11 @@
+<div>
+    <form action="/events/{{event._id}}" method="POST">
+        <input name="title" type="text" placeholder="title" value="{{event.title}}" > <br>
+        <textarea name="description" cols="30" rows="3" placeholder="description">{{event.description}}</textarea> <br>
+        <input name="location" type="text" placeholder="location" value="{{event.location}}" > <br>
+        <input name="date" type="date" placeholder="date" value="{{event.date}}" > <br> 
+{{!-- http://localhost:3000/events/new --}}
+    <button>Submit</button>
+
+    </form>
+</div>

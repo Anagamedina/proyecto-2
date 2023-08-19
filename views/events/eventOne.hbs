@@ -1,12 +1,4 @@
- <a href="/events/new" class="btn btn-green">New Event</a>  
-
-<h1>
-
-events:
-</h1>
-
-{{#each events}}
-  <div class="col-sm-6 mb-3 mb-sm-0 mx-auto">
+  <div class="col-sm-6 mb-3 mb-sm-0">
     <div class="card">
       <div class="card-body">
        
@@ -16,7 +8,7 @@ events:
         <p class="card-text">Time: {{this.date}}</p>
 
         <iframe
-          width="100%"
+          width="600"
           height="450"
           style="border:0"
           loading="lazy"
@@ -59,5 +51,3 @@ events:
     </div>
   </div>
   <br />
-
-{{/each}}

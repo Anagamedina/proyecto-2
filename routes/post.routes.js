@@ -22,28 +22,36 @@ router.post("/new", async (req, res, next) => {
 
 router.get("/", isLoggedIn, (req, res, next) => {
   Post.find({})
-    .populate({
-      path: 'comments',
-      populate: {
-        path: 'userId'
-      }
-    })
+    .populate(
+     [ 
+      {
+        path: 'comments',
+        populate: {
+          path: 'userId'
+        }
+      },
+        {
+         path: 'user',
+        }
+      ]
+    )
     .then((data) => {
       try {
         data.map(post => {
-          post.esMiPost = (post.user.toString() == req.session.currentUser._id);
+          if(post.user) {
+            post.esMiPost = (post.user._id.toString() == req.session.currentUser._id)
+          }
+
           post.comments.map(comment => {
-            try {
-              comment.esMio = (comment.userId && comment.userId._id.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin';
-            } catch (error) {
-              
-            }
+            if(comment.userId ) { 
+              comment.esMio = (comment.userId._id.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin';
+            } 
           });
         });
         //post.comments.map(comment=>{ 
         //  comment.esMio = (comment.userId?._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
         //})
-        
+        // res.send(data)
         res.render("posts/list", { posts: data, userid: req.session.currentUser._id, error: req.session.error });
         delete req.session.error;
       } catch (error) {
@@ -71,36 +79,41 @@ router.get("/my", isLoggedIn, (req, res, next) => {
 });
 
 // READ de un único post
-router.get("/:id", (req, res, next) => { 
-  Post.findById(req.params.id) 
-    .populate({
-      path: "comments", 
-      populate: {
-        path: "userId",
-      },
-    })
-    .then((data) => {
-      console.log(data);
-      let editable = false;
-      try {
-        if (data && data.user) {
-          const userIdString = data.user.toString();
-          if (userIdString === req.session.currentUser._id || req.session.currentUser.role === 'admin') {
-            editable = true;
-          }
-        }
-      } catch (error) {
-        
-      }
-      res.render("posts/viewOne", { post: data, editable: editable });
-    });
+router.get("/:id", (req, res, next) => {  
+  try {
+    Post.findById(req.params.id) 
+      .populate({
+        path: "comments", 
+        populate: {
+          path: "userId",
+        },
+      })
+      .then((data) => {
+        console.log(data); 
+        if (data && data.user) { 
+          let editable = (data.user.toString() === req.session.currentUser._id || req.session.currentUser.role === 'admin')  
+        } 
+        res.render("posts/viewOne", { post: data, editable: editable });
+      });
+
+  } catch (error) {
+    console.log(error);
+    res.send("Error ")
+  }
     //let editable = (data?.user?.toString() == req.session.currentUser._id) || req.session.currentUser.role == 'admin'
 });
 //EDITAR una ruta especifica 
 router.get("/:id/edit", (req, res, next) => {
-  Post.findById(req.params.id).then((data) => {
-    res.render("posts/edit", { post: data });
-  });
+
+  try {
+    Post.findById(req.params.id).then((data) => {
+      res.render("posts/edit", { post: data });
+    });
+  } catch (error) {
+    console.log(error);
+    res.send("Error ")
+  }
+ 
 });
 
 //Actualizacion publicacion especifica 
