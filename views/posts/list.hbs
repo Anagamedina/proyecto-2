@@ -22,10 +22,12 @@
   {{#each posts}}
     <div class="col-12">
       <div class="card mx-auto" style="max-width: 42rem;">
-         <h5 class="card-header">{{this.title}}</h5>
+
+         <h5 class="card-header"><a href="/posts/{{this._id}}">{{this.title}}</a></h5>
+
 
         <div class="card-body">
-       <a href="/posts/{{this._id}}">  
+        
 
         <h5 class="card-title"></h5>   </a>
           <p class="card-text">{{this.description}}</p>

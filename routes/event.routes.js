@@ -78,6 +78,13 @@ router.post("/:id/edit", (req, res, next) => {
   });
 });
 
+//Actualizacion publicacion especifica 
+router.post("/:id/edit", (req, res, next) => {
+  Event.findByIdAndUpdate(req.params.id, req.body).then(() => {
+    res.redirect(`/events/${req.params.id}`); // Redirige a la página de detalles del evento
+  });
+});
+
 router.get("/:id/delete", (req, res, next) => {
   Event.findByIdAndDelete(req.params.id).then(() => {
     res.redirect("/events");
