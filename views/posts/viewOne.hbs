@@ -1,14 +1,14 @@
 <div class="container">
 
- <div class="col-sm-6 mb-3 mb-sm-0">
+ <div class="col-sm-6 mb-3 mb-sm-0 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{{post.title}}</h5>
+          <h5 class="card-title"> 👤 {{post.user.username}} - {{post.title}}</h5>
           <p class="card-text">{{post.description}}</p>
 
       {{#if editable}}
-          <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Editar</a>
-          <a href="/posts/{{post._id}}/delete" class="btn btn-danger">Borrar</a>
+          <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Edit</a>
+          <a href="/posts/{{post._id}}/delete" class="btn btn-danger">Delete</a>
       {{/if}}   
       
         <iframe
@@ -17,7 +17,7 @@
         </iframe>
 
         <form action="/posts/{{post._id}}/like" method="POST">
-          <button type="submit" class="btn btn-primary">Me Gusta</button>
+          <button type="submit" class="btn btn-primary">❤ Me Gusta</button>
         </form>
         <span>{{post.likes.length }} likes</span>
 
