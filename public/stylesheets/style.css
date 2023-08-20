@@ -16,3 +16,22 @@ h1 {
   height: auto;
   margin-right: 10px; 
 }
+
+.bg-signup{
+  background-image: url("https://cdn.pixabay.com/photo/2019/05/18/14/42/jogging-4211946_1280.jpg");
+height: 100%;
+overflow: hidden;
+}
+
+
+.form{
+  background: #ffffffcc;
+  padding: 21px;
+  border-radius: 23px;
+  margin-top: 30px !important;
+}
+.select-buttons{
+  position: absolute;
+  top: 53%;
+  left: 10%;
+}

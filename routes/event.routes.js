@@ -25,8 +25,8 @@ router.get("/", isLoggedIn, (req, res, next) => {
       if(event && event.creator) {  
         event.editable = (event.creator._id.toString()  == req.session.currentUser._id) ||   req.session.currentUser.role == 'admin'
       }
-    })
-
+        
+    }) 
     res.render("events/list", { events: data });
   });
 });

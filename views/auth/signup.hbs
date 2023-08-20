@@ -1,29 +1,35 @@
-<div id="form">
+ 
+<div class="bg-signup">
+<br>
+<br>
+<br>
+<div id="form" class="form w-50 m-auto  ">
   <h2>Sign Up</h2>
   <form action="/auth/signup" method="POST">
 
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
-    </label>
-
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
-
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
+    <label> Username </label> 
+      <input  class="form-control" type="text" name="username" placeholder="Your username" />
+   
+    <label> Email  </label>
+      <input  class="form-control" type="email" name="email" placeholder="Your email" />
+   
+    <label> Password </label>
+      <input  class="form-control" type="password" name="password" placeholder="Your password" />
+   
+    <label> Select user role </label>
  
-    <select name="role"  >
+    <select  class="form-control" name="role"  >
       <option selected value="user">user</option>
       <option value="admin">admin</option>
     </select>
 
-    <button type="submit">Sign Up</button>
+    <button class="btn btn-primary w-100 py-2 mt-2"  type="submit">Sign Up</button>
 
 
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
   </form>
+</div>
+
 </div>
