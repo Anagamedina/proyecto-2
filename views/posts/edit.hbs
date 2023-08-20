@@ -1,9 +1,9 @@
-<div>
+<div  class="col-12 col-md-6 mx-auto py-4" >
     <form action="/posts/{{post._id}}/edit" method="POST">
-        <input name="title" type="text" placeholder="title" value="{{post.title}}" > <br>
-        <textarea name="description" cols="30" rows="3" placeholder="description" > {{post.description}} </textarea> <br>
-        <input name="origin" type="text" placeholder="origin"  value="{{post.origin}}"> <br>
-        <input name="destination" type="text" placeholder="destination"  value="{{post.destination}}"> <br> 
+        <input  class="form-control" name="title" type="text" placeholder="title" value="{{post.title}}" > <br>
+        <textarea  class="form-control" name="description" cols="30" rows="3" placeholder="description" > {{post.description}} </textarea> <br>
+        <input class="form-control" name="origin" type="text" placeholder="origin"  value="{{post.origin}}"> <br>
+        <input class="form-control" name="destination" type="text" placeholder="destination"  value="{{post.destination}}"> <br> 
     <button>Submit</button>
 
     </form>

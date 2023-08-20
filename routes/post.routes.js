@@ -78,7 +78,7 @@ router.get("/my", isLoggedIn, (req, res, next) => {
   });
 });
 
-// READ de un único post
+
 // READ de un único post
 router.get("/:id", (req, res, next) => {  
   try {

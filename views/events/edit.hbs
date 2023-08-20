@@ -1,9 +1,9 @@
-<div>
+<div class="col-12 col-md-6 mx-auto py-4">
     <form action="/events/{{events._id}}/edit" method="POST">
-        <input name="title" type="text" placeholder="title" value="{{events.title}}" > <br>
-        <textarea name="description" cols="30" rows="3" placeholder="description">{{events.description}}</textarea> <br>
-        <input name="location" type="text" placeholder="location" value="{{events.location}}" > <br>
-        <input name="date" type="date" placeholder="date" value="{{events.date}}" > <br> 
+        <input class="form-control" name="title" type="text" placeholder="title" value="{{events.title}}" > <br>
+        <textarea class="form-control" name="description" cols="30" rows="3" placeholder="description">{{events.description}}</textarea> <br>
+        <input class="form-control" name="location" type="text" placeholder="location" value="{{events.location}}" > <br>
+        <input class="form-control" name="date" type="date" placeholder="date" value="{{events.date}}" > <br> 
 {{!-- http://localhost:3000/events/new --}}
     <button>Submit</button>
 
