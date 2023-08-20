@@ -10,3 +10,9 @@ a {
 h1 {
   color: 15px;
 }
+
+.navbar-brand img {
+  width: 40px; 
+  height: auto;
+  margin-right: 10px; 
+}

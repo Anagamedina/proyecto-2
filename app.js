@@ -2,6 +2,7 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
+
 // ℹ️ Connects to the database
 require("./db");
 
@@ -24,6 +25,7 @@ const projectName = "proyecto-2";
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
+
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
