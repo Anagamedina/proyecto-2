@@ -7,8 +7,8 @@
           <p class="card-text">{{post.description}}</p>
 
       {{#if editable}}
-          <a href="/posts/{{post._id}}/edit" class="btn btn-primary">Edit</a>
-          <a href="/posts/{{post._id}}/delete" class="btn btn-danger">Delete</a>
+          <a href="/posts/{{post._id}}/edit" class="btn btn-warning">Edit</a>
+          <a href="/posts/{{post._id}}/delete" class="btn btn-secondary">Delete</a>
       {{/if}}   
       
         <iframe
@@ -17,7 +17,7 @@
         </iframe>
 
         <form action="/posts/{{post._id}}/like" method="POST">
-          <button type="submit" class="btn btn-primary">❤ Me Gusta</button>
+          <button type="submit" class="btn btn-light">❤ Me Gusta</button>
         </form>
         <span>{{post.likes.length }} likes</span>
 

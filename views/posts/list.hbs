@@ -39,13 +39,13 @@
         </iframe>
           
           <form action="/posts/{{this._id}}/like" method="POST">
-        <button type="submit" class="btn btn-warning"> ❤ Me Gusta</button>
+        <button type="submit" class="btn btn-light"> ❤ Me Gusta</button>
         </form>
         <span>{{this.likes.length }} likes</span>
         <br>
           {{#if this.esMiPost}}
               <a href="/posts/{{this._id}}/edit" class="btn btn-warning">Edit</a>
-              <a href="/posts/{{this._id}}/delete" class="btn btn-warning">delete</a>
+              <a href="/posts/{{this._id}}/delete" class="btn btn-secondary">Delete</a>
           {{/if}}
 
           
@@ -64,7 +64,7 @@
                     
                   </div>
                     {{#if this.esMio}} 
-                      <a href="/comments/delete/{{this.id}}" class="btn btn-warning">Delete</a>
+                      <a href="/comments/delete/{{this.id}}" class="btn btn-secondary">Delete</a>
                    {{/if}}
 
                 </li>

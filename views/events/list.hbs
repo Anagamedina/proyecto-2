@@ -6,7 +6,7 @@ Events
 <div class="col-sm-6 mx-auto my-2">
     <div class="card mx-auto">
       <div class="card-body mx-auto">
-        <a href="/events/new"  class="btn btn-primary" >New Event</a> 
+        <a href="/events/new"  class="btn btn-warning" >New Event</a> 
       </div>
     </div>
   </div> 
@@ -36,8 +36,8 @@ Events
             &q={{this.location}}">
         </iframe>
           {{#if this.editable}}
-            <a href="/events/{{this._id}}/edit" class="btn btn-primary">Editar</a> 
-            <a href="/events/{{this._id}}/delete" class="btn btn-danger">Borrar</a>
+            <a href="/events/{{this._id}}/edit" class="btn btn-warning">Edit</a> 
+            <a href="/events/{{this._id}}/delete" class="btn btn-secondary">Delete</a>
           {{/if}}   
 
       </div>
@@ -63,7 +63,7 @@ Events
             name="eventId"
             value="{{this._id}}"
           />
-          <button class="btn btn-primary btn-sm">Add myself</button>
+          <button class="btn btn-warning btn-sm">Add myself</button>
         </form>
       </div>
     </div>
